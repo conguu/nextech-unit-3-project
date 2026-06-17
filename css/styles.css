@@ -20,44 +20,57 @@ body {
     background-color: white;
 }
 
+#title {
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 #choices {
     display: flex;
     flex-direction: row;
-    gap: 50px;
+    gap: 65px;
+}
+
+button {
+    font-size: 17.5px;
+    background: transparent;
+    border: 3px solid black;
+    border-radius: 8px;
+    transition: transform 0.1s ease-in-out;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+button:active {
+    transform: scale(0.95);
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    -webkit-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100%, 0);
   }
 
   to {
     opacity: 1;
-    -webkit-transform: none;
-    transform: none;
   }
 }
 
 .fadeIn {
-  -webkit-animation-name: fadeInUp;
-  animation-name: fadeInUp;
+  animation: fadeIn 0.3s ease;
 }
 
-@keyframes fadeOutDown {
+@keyframes fadeOut {
   from {
     opacity: 1;
   }
 
   to {
     opacity: 0;
-    -webkit-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100%, 0);
   }
 }
 
 .fadeOut {
-  -webkit-animation-name: fadeOutDown;
-  animation-name: fadeOutDown;
+  animation: fadeOut 0.3s ease;
 }

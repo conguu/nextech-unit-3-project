@@ -16,7 +16,7 @@ var options = {
         },
 
         bedroom: {
-            message: ["You get out of bed."],
+            message: ["You get out of bed, alarm clock still ringing."],
             choices: [
                 {
                     option: "Turn off alarm clock",
@@ -29,5 +29,40 @@ var options = {
                 },
             ]
         },
+
+        dream: {
+            message: ["You go back to sleep, dreaming of..."],
+            choices: [
+                {
+                    option: "Falling off of a building",
+                    nextLevel: "creed",
+                },
+
+                {
+                    option: "67",
+                    nextLevel: "sixseven",
+                },
+            ]
+        },
+
+            creed: {
+                message: [""],
+                choices: [
+                    {
+                        option: "Wake up",
+                        nextLevel: "start",
+                    },
+                ]
+            },
+
+            sixseven: {
+                message: [""],
+                choices: [
+                    {
+                        option: "Wake up",
+                        nextLevel: "start",
+                    },
+                ]
+            },
     }
 }

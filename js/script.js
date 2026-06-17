@@ -1,63 +1,73 @@
 let container = document.querySelector("#container");
 let title = document.querySelector("#title");
-let choices = document.querySelector("#choices");
-let choice = document.querySelector("#choices button");
+let choicesContainer = document.querySelector("#choices");
 
 var past = [options.levels.start];
 var firstLevel = options.levels.start;
 renderLevel(firstLevel);
 
-choice.addEventListener("click", function() {
-    var nextLevel = $(this).attr("data-next-level");
-    $("#container").animateCss("fadeOut", function() {
+choicesContainer.addEventListener("click", function(event) {
+    if (event.target.tagName === "BUTTON") {
+        let clickedButton = event.target;
+        var nextLevel = clickedButton.getAttribute("data-next-level");
+        
+        container.classList.add("fadeOut");
         renderLevel(options.levels[nextLevel]);
         
         console.log("below is the normal thing passed in when choice is clicked");
         console.log(options.levels[nextLevel]);
         
-        $("#container").removeClass("fadeOut");
-        $("#container").addClass("fadeIn");
+        container.classList.remove("fadeOut");
+        container.classList.add("fadeIn");
         
-        past.push(option.levels[nextLevel]);
+        past.push(options.levels[nextLevel]);
         console.log(past);
-    
-        
-    });
+    }
 });
 
 function renderLevel(level) {
-    choices.innerHTML = "";
+    choicesContainer.innerHTML = "";
+    
+    if (!level.message || level.message.length === 0) {
+        callback();
+        return;
+    }
+
     title.innerHTML = level.message[0];
-        
-    if(level.message.length !== 0){
+    
+    if (level.message.length > 1) {
         let i = 1;
         
-        function time(){
+        function time() {
             setTimeout(function() {
-                $("#title").text(level.message[i]); 
-                i ++;
+                title.innerHTML = level.message[i];
+                i++;
                 
-                if (i < level.message.length){  //wait before the function is executed again
-                    time()
-                }else{
-                    callback(); //
+                if (i < level.message.length) { 
+                    time();
+                } else {
+                    callback(); 
                 }
-            }, 1500)
+            }, 1500);
         }
         
         time();
-    }
-    // this line below need to be execute after the if loop is over.
+    } else {callback();}
     
-    function callback(){
-        $("#choices").empty();
-    
+    function callback() {
+        choicesContainer.innerHTML = "";
 
-        var choices = level.choices;
-        if (choices) {
-            for (var i = 0; i < choices.length; i++) {
-                var choice = choices[i];
-                $("#choices").append("<button class='btn btn-outline-secondary' data-next-level='" + choice.nextLevel + "'>" + choice.text + "</button>");
+        var levelChoices = level.choices;
+        if (levelChoices) {
+            for (var i = 0; i < levelChoices.length; i++) {
+                var choiceData = levelChoices[i];
+                var nextLevelAttr = choiceData.nextLevel;
+                var buttonText = choiceData.option;
+
+                choicesContainer.insertAdjacentHTML(
+                    "beforeend", 
+                    "<button data-next-level='" + nextLevelAttr + "'>" + buttonText + "</button>"
+                );
             }
         }
     }
