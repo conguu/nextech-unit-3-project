@@ -1,60 +1,101 @@
 let container = document.querySelector("#container");
 let title = document.querySelector("#title");
 let choicesContainer = document.querySelector("#choices");
+let eventContainer = document.querySelector("#eventContainer");
 let cat = document.querySelector("#cat");
+let catCount = 0;
 
-const oof = new Audio("assets/oof.mp3");
-const holdmenow = new Audio("assets/creed.mp3");
-const sixseven = new Audio("assets/67-sound.mp3");
-const ominousMusic = new Audio("assets/ominousBlackCube.mp3");
-const catMusic = new Audio("assets/silly-cat.mp3")
+const alarm = new Audio("assets/audio/alarm.mp3");
+const oof = new Audio("assets/audio/oof.mp3");
+const holdmenow = new Audio("assets/audio/creed.mp3");
+holdmenow.volume = 0.2;
+const sixseven = new Audio("assets/audio/67-sound.mp3");
+sixseven.volume = 0.1;
+const carCrash = new Audio("assets/audio/car-crash.mp3");
+carCrash.volume = 0.8;
+const slip = new Audio("assets/audio/slip.mp3");
+slip.volume = 0.8;
+const ominousMusic = new Audio("assets/audio/ominous.mp3");
+const whisperSound = new Audio("assets/audio/whisper.mp3");
+const catMusic = new Audio("assets/audio/silly-cat.mp3");
+catMusic.volume = 0.8;
 const challengerApproaching = new Audio(
 	"assets/champ/challenger-approaching.mp3",
 );
+challengerApproaching.volume = 0.4;
 const battle = new Audio("assets/champ/battle.mp3");
+battle.volume = 0.8;
 
-var past = [options.levels.start];
-var firstLevel = options.levels.start;
-renderLevel(firstLevel);
+setTimeout(function() {
+	renderLevel(options.levels.start, "start");
+	container.classList.add("fadeIn");
+}, 25);
 
 choicesContainer.addEventListener("click", function (event) {
 	if (event.target.tagName === "BUTTON") {
 		let clickedButton = event.target;
 		var nextLevel = clickedButton.getAttribute("data-next-level");
-
-		if (nextLevel === "challenge") {
+		
+		if (nextLevel === "dogCouch") {
+			triggerOminousSequence();
+			return;
+		} else if (nextLevel === "dance") {
+			catCount++;
+			if (catCount >= 5) {
+				triggerStopCatSequence();
+				return;
+			}
+		} else if (nextLevel === "bottomOfStairsCat") {
+			Toastify({
+				text: "Achievement: New Friend",
+				duration: 3000,
+				newWindow: true,
+				close: false,
+				gravity: "bottom",
+				position: "right",
+				stopOnFocus: true,
+				className: "button",
+			}).showToast();
+		} else if (nextLevel === "bottomOfStairs") {
+			cat.style.visibility = "hidden";
+			cat.style.opacity = "0";
+			catMusic.pause();
+			catMusic.currentTime = 0;
+		} else if (nextLevel === "dogFind" && catCount >= 5) {
+			container.classList.add("fadeOut");
+			renderLevel(options.levels["bottomOfStairsNoCat"], "bottomOfStairsNoCat");
+			container.classList.remove("fadeOut");
+			container.classList.add("fadeIn");
+			return;
+		} else if (nextLevel === "challenge") {
 			triggerChallengeSequence();
 			return;
-		} 
-        if (nextLevel === "dogCouch") {
-		    triggerOminousSequence();
-            return;
-        }
+		}
 
 		container.classList.add("fadeOut");
 		renderLevel(options.levels[nextLevel], nextLevel);
-
-		console.log("below is the normal thing passed in when choice is clicked");
-		(console.log(options.levels[nextLevel]), nextLevel);
-
 		container.classList.remove("fadeOut");
 		container.classList.add("fadeIn");
-
-		past.push(options.levels[nextLevel]);
-		console.log(past);
-
-		if (nextLevel === "challenge") {
-			challenge();
-		}
 	}
 });
 
 function renderLevel(level, levelName) {
-	console.log(level);
+	console.log(levelName)
 	choicesContainer.innerHTML = "";
-
-	if (levelName === "creed") {
-		document.body.style.backgroundImage = "url('assets/creed-one-last-breath.gif')";
+	if (levelName === "start" || levelName === "bedroom") {
+		alarm.play().catch(function (error) {
+			console.log("Audio playback waiting for user interaction:", error);
+		});
+	}
+	if (levelName === "nightStand") {
+		alarm.pause();
+		alarm.currentTime = 0;
+	} else if (levelName === "dream") {
+		alarm.pause();
+		alarm.currentTime = 0;
+	} else if (levelName === "creed") {
+		document.body.style.backgroundImage =
+			"url('assets/creed-one-last-breath.gif')";
 		holdmenow.play().catch(function (error) {
 			console.log("Audio playback waiting for user interaction:", error);
 		});
@@ -63,14 +104,64 @@ function renderLevel(level, levelName) {
 		sixseven.play().catch(function (error) {
 			console.log("Audio playback waiting for user interaction:", error);
 		});
-	} else if (levelName === "outside" || levelName === "dance") {
-        cat.style.opacity = 1;
-        cat.style.left = "45%";
-        cat.style.top = "12.5%";
-        catMusic.play().catch(function (error) {
+	} else if (levelName === "banana") {
+		slip.play().catch(function (error) {
 			console.log("Audio playback waiting for user interaction:", error);
 		});
-    } else {
+		Toastify({
+			text: "Achievement: Mario Kart",
+			duration: 3000,
+			newWindow: true,
+			close: false,
+			gravity: "bottom",
+			position: "right",
+			stopOnFocus: true,
+			className: "button",
+		}).showToast();
+	} else if (levelName === "carCrash") {
+		document.body.style.backgroundImage = "url('assets/car-crash.gif')";
+		carCrash.play().catch(function (error) {
+			console.log("Audio playback waiting for user interaction:", error);
+		});
+		Toastify({
+			text: "Achievement: Vehicular Manslaughter",
+			duration: 3000,
+			newWindow: true,
+			close: false,
+			gravity: "bottom",
+			position: "right",
+			stopOnFocus: true,
+			className: "button",
+		}).showToast();
+	} else if (levelName === "outside" || levelName === "dance") {
+		cat.style.opacity = "1";
+		cat.style.visibility = "visible";
+		catMusic.play().catch(function (error) {
+			console.log("Audio playback waiting for user interaction:", error);
+		});
+	} else if (levelName === "dogBlanket") {
+		Toastify({
+			text: "Achievement: Sleepy",
+			duration: 3000,
+			newWindow: true,
+			close: false,
+			gravity: "bottom",
+			position: "right",
+			stopOnFocus: true,
+			className: "button"
+		}).showToast();
+	} else if (levelName === "outsideDead") {
+		Toastify({
+			text: "Achievement: Gravity",
+			duration: 3000,
+			newWindow: true,
+			close: false,
+			gravity: "bottom",
+			position: "right",
+			stopOnFocus: true,
+			className: "button"
+		}).showToast();
+	} else {
 		document.body.style.backdropFilter = "none";
 		document.body.style.backgroundImage = "none";
 		holdmenow.pause();
@@ -81,7 +172,7 @@ function renderLevel(level, levelName) {
 		oof.currentTime = 0;
 	}
 
-	if (level.choices.some((choice) => choice.option === "Restart")) {
+	if (level?.choices?.some((choice) => choice.option === "Restart")) {
 		document.body.style.backdropFilter = "brightness(0.75)";
 		oof.play().catch(function (error) {
 			console.log("Audio playback waiting for user interaction:", error);
@@ -146,33 +237,65 @@ function renderLevel(level, levelName) {
 	}
 }
 
+function triggerStopCatSequence() {
+	container.classList.add("fadeOut");
+	renderLevel(options.levels["stopCat"], "stopCat");
+	container.classList.remove("fadeOut");
+	container.classList.add("fadeIn");
+
+	cat.style.opacity = 0;
+	catMusic.pause();
+	catMusic.currentTime = 0;
+
+	Toastify({
+		text: "Achievement: Master Dancer",
+		duration: 3000,
+		newWindow: true,
+		close: false,
+		gravity: "bottom",
+		position: "right",
+		stopOnFocus: true,
+		className: "button",
+	}).showToast();
+	return;
+}
+
 function triggerOminousSequence() {
 	let ominousBlackCube = document.querySelector("#ominousBlackCube");
 
 	ominousMusic.play().catch(function (error) {
 		console.log("Audio playback waiting for user interaction:", error);
 	});
-    
-    oof.volume = 0;
-    container.classList.add("fadeOut");
-    document.body.style.backgroundColor = "black";
+	whisperSound.play().catch(function (error) {
+		console.log("Audio playback waiting for user interaction:", error);
+	});
 
-    setTimeout(function() {
-        ominousBlackCube.style.left = "32.5%";
-        ominousBlackCube.style.opacity = "1";
-        setTimeout(function () {
-            ominousBlackCube.style.left = "-100%";
-            ominousBlackCube.style.opacity = "0";
-            ominousMusic.pause();
-            ominousMusic.currentTime = 0;
-            oof.volume = 1;
-            document.body.style.backdropFilter = "brightness(0.75)";
-            document.body.style.backgroundColor = "slategray";
-            container.classList.remove("fadeOut");
-            container.classList.add("fadeIn");
-            renderLevel(options.levels["dogCouch"], "dogCouch");
-        }, 15000);
-    }, 500);
+	container.classList.add("fadeOut");
+	document.body.style.backgroundColor = "black";
+	ominousBlackCube.style.visibility = "visible";
+	ominousBlackCube.style.opacity = "1";
+	setTimeout(function () {
+		Toastify({
+			text: "Achievement: Cube",
+			duration: 3000,
+			newWindow: true,
+			close: false,
+			gravity: "bottom",
+			position: "right",
+			stopOnFocus: true,
+			className: "button",
+		}).showToast();
+		ominousBlackCube.style.opacity = "0";
+		ominousMusic.pause();
+		ominousMusic.currentTime = 0;
+		whisperSound.pause();
+		whisperSound.currentTime = 0;
+		document.body.style.backdropFilter = "brightness(0.75)";
+		document.body.style.backgroundColor = "slategray";
+		container.classList.remove("fadeOut");
+		container.classList.add("fadeIn");
+		renderLevel(options.levels["dogCouch"], "dogCouch");
+	}, 8000);
 }
 
 function triggerChallengeSequence() {
@@ -182,15 +305,17 @@ function triggerChallengeSequence() {
 	challengerApproaching.play().catch(function (error) {
 		console.log("Audio playback waiting for user interaction:", error);
 	});
-    
+
 	container.classList.add("fadeOut");
 
+	newFoeImg.style.visibility = "visible";
 	newFoeImg.style.left = "0";
 	newFoeImg.style.opacity = "1";
 
 	setTimeout(function () {
 		newFoeImg.style.left = "100%";
 		newFoeImg.style.opacity = "0";
+		newFoeImg.style.visibility = "hidden";
 
 		setTimeout(function () {
 			newFoeImg.style.left = "-50%";
@@ -201,6 +326,7 @@ function triggerChallengeSequence() {
 				console.log("Audio playback waiting for user interaction:", error);
 			});
 
+			champ.style.visibility = "visible";
 			champ.style.left = "40%";
 			champ.style.opacity = "1";
 		}, 500);

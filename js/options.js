@@ -231,6 +231,30 @@ var options = {
 					option: "In the kitchen",
 					nextLevel: "dogKitchen",
 				},
+				{
+					option: "Go back",
+					nextLevel: "bottomOfStairs",
+				},
+			],
+		},
+
+		dogFind2: {
+			message: [
+				"You decide to find the dog. <br> Where should you start your search?",
+			],
+			choices: [
+				{
+					option: "In the living room",
+					nextLevel: "dogLivingRoom",
+				},
+				{
+					option: "In the kitchen",
+					nextLevel: "dogKitchen",
+				},
+				{
+					option: "Go back",
+					nextLevel: "bottomOfStairsNoCat",
+				},
 			],
 		},
 
@@ -247,9 +271,9 @@ var options = {
 					option: "Under a blanket",
 					nextLevel: "dogBlanket",
 				},
-                {
-					option: "Look in the kitchen",
-					nextLevel: "dogKitchen",
+				{
+					option: "Go back",
+					nextLevel: "dogFind2",
 				},
 			],
 		},
@@ -266,9 +290,9 @@ var options = {
 			],
 		},
 
-        dogBlanket: {
+		dogBlanket: {
 			message: [
-				"You found him! <br> There are many endings; try to get them all!",
+				"You found him sleeping under the blanket!",
 			],
 			choices: [
 				{
@@ -278,7 +302,7 @@ var options = {
 			],
 		},
 
-        dogKitchen: {
+		dogKitchen: {
 			message: [
 				"You check the kitchen for the dog. <br> Where should you look?",
 			],
@@ -291,17 +315,15 @@ var options = {
 					option: "Inside of the dog's crate",
 					nextLevel: "dogCrate",
 				},
-                {
-					option: "Look in the living room",
-					nextLevel: "dogLivingRoom",
+				{
+					option: "Go back",
+					nextLevel: "dogFind2",
 				},
 			],
 		},
 
-        dogTable: {
-			message: [
-				"You check under the table, but find nothing.",
-			],
+		dogTable: {
+			message: ["You check under the table, but find nothing."],
 			choices: [
 				{
 					option: "Go back",
@@ -310,10 +332,8 @@ var options = {
 			],
 		},
 
-        dogCrate: {
-			message: [
-				"You check inside of the dogs crate, but find nothing.",
-			],
+		dogCrate: {
+			message: ["You check inside of the dogs crate, but find nothing."],
 			choices: [
 				{
 					option: "Go back",
@@ -322,12 +342,10 @@ var options = {
 			],
 		},
 
-        outside: {
-			message: [
-				"You walk outside and randomly spot a cat dancing.",
-			],
+		outside: {
+			message: ["You walk outside and randomly spot a cat dancing."],
 			choices: [
-                {
+				{
 					option: "Dance with it",
 					nextLevel: "dance",
 				},
@@ -338,32 +356,80 @@ var options = {
 			],
 		},
 
-        dance: {
-			message: [
-				"You dance with the cat.",
-			],
+		dance: {
+			message: ["You dance with the cat."],
 			choices: [
-                {
+				{
 					option: "Dance more",
 					nextLevel: "dance",
 				},
 				{
 					option: "Go back",
-					nextLevel: "bottomOfStairs",
+					nextLevel: "bottomOfStairsCat",
 				},
 			],
 		},
 
-        bottomOfStairs: {
-            message: [
+		stopCat: {
+			message: ["The cat's had enough dancing."],
+			choices: [
+				{
+					option: "Go back",
+					nextLevel: "bottomOfStairsNoCat",
+				},
+			],
+		},
+
+		bottomOfStairs: {
+			message: ["You go back to the bottom of the stairs."],
+			choices: [
+				{
+					option: "Find the dog",
+					nextLevel: "dogFind",
+				},
+				{
+					option: "Go outside",
+					nextLevel: "outside",
+				},
+			],
+		},
+
+		bottomOfStairsCat: {
+			message: [
 				"You go back to the bottom of the stairs. <br> (The cat also decided that he likes you)",
 			],
 			choices: [
-                {
+				{
 					option: "Find the dog",
 					nextLevel: "dogFind",
 				},
 			],
-        }
+		},
+
+		bottomOfStairsNoCat: {
+			message: [
+				"You go back to the bottom of the stairs.",
+			],
+			choices: [
+				{
+					option: "Find the dog",
+					nextLevel: "dogFind2",
+				},
+				{
+					option: "Go outside",
+					nextLevel: "outsideNoCat",
+				},
+			],
+		},
+
+		outsideNoCat: {
+			message: ["You walk outside, finding nothing."],
+			choices: [
+				{
+					option: "Go back",
+					nextLevel: "bottomOfStairsNoCat",
+				},
+			],
+		},
 	},
 };
