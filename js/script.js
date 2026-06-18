@@ -6,6 +6,7 @@ let cat = document.querySelector("#cat");
 let catCount = 0;
 
 const alarm = new Audio("assets/audio/alarm.mp3");
+alarm.volume = 0.5;
 const oof = new Audio("assets/audio/oof.mp3");
 const holdmenow = new Audio("assets/audio/creed.mp3");
 holdmenow.volume = 0.2;
@@ -19,14 +20,12 @@ const ominousMusic = new Audio("assets/audio/ominous.mp3");
 const whisperSound = new Audio("assets/audio/whisper.mp3");
 const catMusic = new Audio("assets/audio/silly-cat.mp3");
 catMusic.volume = 0.8;
-const challengerApproaching = new Audio(
-	"assets/champ/challenger-approaching.mp3",
-);
+const challengerApproaching = new Audio("assets/champ/challenger-approaching.mp3");
 challengerApproaching.volume = 0.4;
 const battle = new Audio("assets/champ/battle.mp3");
 battle.volume = 0.8;
 
-setTimeout(function() {
+setTimeout(function () {
 	renderLevel(options.levels.start, "start");
 	container.classList.add("fadeIn");
 }, 25);
@@ -80,7 +79,7 @@ choicesContainer.addEventListener("click", function (event) {
 });
 
 function renderLevel(level, levelName) {
-	console.log(levelName)
+	console.log(levelName);
 	choicesContainer.innerHTML = "";
 	if (levelName === "start" || levelName === "bedroom") {
 		alarm.play().catch(function (error) {
@@ -94,8 +93,7 @@ function renderLevel(level, levelName) {
 		alarm.pause();
 		alarm.currentTime = 0;
 	} else if (levelName === "creed") {
-		document.body.style.backgroundImage =
-			"url('assets/creed-one-last-breath.gif')";
+		document.body.style.backgroundImage = "url('assets/creed-one-last-breath.gif')";
 		holdmenow.play().catch(function (error) {
 			console.log("Audio playback waiting for user interaction:", error);
 		});
@@ -148,7 +146,7 @@ function renderLevel(level, levelName) {
 			gravity: "bottom",
 			position: "right",
 			stopOnFocus: true,
-			className: "button"
+			className: "button",
 		}).showToast();
 	} else if (levelName === "outsideDead") {
 		Toastify({
@@ -159,7 +157,7 @@ function renderLevel(level, levelName) {
 			gravity: "bottom",
 			position: "right",
 			stopOnFocus: true,
-			className: "button"
+			className: "button",
 		}).showToast();
 	} else {
 		document.body.style.backdropFilter = "none";
@@ -218,19 +216,14 @@ function renderLevel(level, levelName) {
 				var buttonText = choiceData.option;
 
 				if (choiceData.image) {
-					buttonContent =
-						"<img src='" + choiceData.image + "' alt='" + buttonText + "' />";
+					buttonContent = "<img src='" + choiceData.image + "' alt='" + buttonText + "' />";
 				} else {
 					buttonContent = buttonText;
 				}
 
 				choicesContainer.insertAdjacentHTML(
 					"beforeend",
-					"<button data-next-level='" +
-						nextLevelAttr +
-						"'>" +
-						buttonContent +
-						"</button>",
+					"<button data-next-level='" + nextLevelAttr + "'>" + buttonContent + "</button>",
 				);
 			}
 		}

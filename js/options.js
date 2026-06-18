@@ -66,9 +66,7 @@ var options = {
 		},
 
 		hallNaked: {
-			message: [
-				"You leave your bedroom, forgetting to put on clothes. <br> Your dad finds you naked.",
-			],
+			message: ["You leave your bedroom, forgetting to put on clothes. <br> Your dad finds you naked."],
 			choices: [
 				{
 					option: "Restart",
@@ -78,9 +76,7 @@ var options = {
 		},
 
 		nightStand: {
-			message: [
-				"You walk over to your nightstand and turn off your alarm clock.",
-			],
+			message: ["You walk over to your nightstand and turn off your alarm clock."],
 			choices: [
 				{
 					option: "Get your clothes on",
@@ -123,9 +119,7 @@ var options = {
 		},
 
 		outsideDead: {
-			message: [
-				"You jump out of the window and die. <br> You live on the third floor, what'd you expect?",
-			],
+			message: ["You jump out of the window and die. <br> You live on the third floor, what'd you expect?"],
 			choices: [
 				{
 					option: "Restart",
@@ -159,9 +153,7 @@ var options = {
 		},
 
 		stairs: {
-			message: [
-				"You start walking downstairs. <br> Pick a number to determine the outcome.",
-			],
+			message: ["You start walking downstairs. <br> Pick a number to determine the outcome."],
 			choices: [
 				{
 					option: "1",
@@ -191,9 +183,7 @@ var options = {
 		},
 
 		banana: {
-			message: [
-				"As you're walking down the stairs, you slip on a banana. <br> It causes you to trip and die.",
-			],
+			message: ["As you're walking down the stairs, you slip on a banana. <br> It causes you to trip and die."],
 			choices: [
 				{
 					option: "Restart",
@@ -203,9 +193,7 @@ var options = {
 		},
 
 		continue: {
-			message: [
-				"You make it all the way down safely. <br> What should you do next?",
-			],
+			message: ["You make it all the way down safely. <br> What should you do next?"],
 			choices: [
 				{
 					option: "Find the dog",
@@ -219,9 +207,7 @@ var options = {
 		},
 
 		dogFind: {
-			message: [
-				"You decide to find the dog. <br> Where should you start your search?",
-			],
+			message: ["You decide to find the dog. <br> Where should you start your search?"],
 			choices: [
 				{
 					option: "In the living room",
@@ -239,9 +225,7 @@ var options = {
 		},
 
 		dogFind2: {
-			message: [
-				"You decide to find the dog. <br> Where should you start your search?",
-			],
+			message: ["You decide to find the dog. <br> Where should you start your search?"],
 			choices: [
 				{
 					option: "In the living room",
@@ -259,9 +243,7 @@ var options = {
 		},
 
 		dogLivingRoom: {
-			message: [
-				"You enter the living room to find the dog. <br> Where should you look?",
-			],
+			message: ["You enter the living room to find the dog. <br> Where should you look?"],
 			choices: [
 				{
 					option: "Behind the couch",
@@ -279,9 +261,7 @@ var options = {
 		},
 
 		dogCouch: {
-			message: [
-				"You check behind the couch and find an omnious black cube. <br> It sucks you in and you die.",
-			],
+			message: ["You check behind the couch and find an omnious black cube. <br> It sucks you in and you die."],
 			choices: [
 				{
 					option: "Restart",
@@ -291,9 +271,7 @@ var options = {
 		},
 
 		dogBlanket: {
-			message: [
-				"You found him sleeping under the blanket!",
-			],
+			message: ["You found him sleeping under the blanket!"],
 			choices: [
 				{
 					option: "Play again?",
@@ -303,9 +281,7 @@ var options = {
 		},
 
 		dogKitchen: {
-			message: [
-				"You check the kitchen for the dog. <br> Where should you look?",
-			],
+			message: ["You check the kitchen for the dog. <br> Where should you look?"],
 			choices: [
 				{
 					option: "Under the table",
@@ -395,9 +371,7 @@ var options = {
 		},
 
 		bottomOfStairsCat: {
-			message: [
-				"You go back to the bottom of the stairs. <br> (The cat also decided that he likes you)",
-			],
+			message: ["You go back to the bottom of the stairs. <br> (The cat also decided that he likes you)"],
 			choices: [
 				{
 					option: "Find the dog",
@@ -407,9 +381,7 @@ var options = {
 		},
 
 		bottomOfStairsNoCat: {
-			message: [
-				"You go back to the bottom of the stairs.",
-			],
+			message: ["You go back to the bottom of the stairs."],
 			choices: [
 				{
 					option: "Find the dog",

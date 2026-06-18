@@ -1,14 +1,14 @@
 function createAudio(src, volume = 1) {
-  const audio = new Audio(src);
-  audio.volume = volume;
-  return audio;
+	const audio = new Audio(src);
+	audio.volume = volume;
+	return audio;
 }
 
 const sounds = {
-	alarm: createAudio("assets/audio/alarm.mp3"),
+	alarm: createAudio("assets/audio/alarm.mp3", 0.5),
 	oof: createAudio("assets/audio/oof.mp3"),
 	creed: createAudio("assets/audio/creed.mp3", 0.2),
-	sixseven: createAudio("assets/audio/sixseven.mp3", 0.1),
+	sixSeven: createAudio("assets/audio/sixseven.mp3", 0.1),
 	crash: createAudio("assets/audio/crash.mp3", 0.8),
 	slip: createAudio("assets/audio/slip.mp3", 0.8),
 	ominous: createAudio("assets/audio/ominous.mp3"),
@@ -19,7 +19,10 @@ const sounds = {
 };
 
 function stopAllSounds() {
-  Object.values(sounds).forEach(s => { s.pause(); s.currentTime = 0; });
+	Object.values(sounds).forEach((s) => {
+		s.pause();
+		s.currentTime = 0;
+	});
 }
 
 function showAchievement(text) {
@@ -35,11 +38,11 @@ function showAchievement(text) {
 }
 
 const state = {
-  catCount: 0,
-  hasCat: false,
+	catCount: 0,
+	hasCat: false,
 };
 
 function resetState() {
-  state.catCount = 0;
-  state.hasCat = false;
+	state.catCount = 0;
+	state.hasCat = false;
 }
