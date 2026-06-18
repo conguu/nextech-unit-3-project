@@ -65,8 +65,8 @@ function renderLevel(level, levelName) {
 		});
 	} else if (levelName === "outside" || levelName === "dance") {
         cat.style.opacity = 1;
-        cat.style.left = "32.5%";
-        cat.style.top = "20%";
+        cat.style.left = "45%";
+        cat.style.top = "12.5%";
         catMusic.play().catch(function (error) {
 			console.log("Audio playback waiting for user interaction:", error);
 		});

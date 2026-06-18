@@ -117,12 +117,12 @@ var options = {
 				},
 				{
 					option: "Jump out of the window",
-					nextLevel: "outside",
+					nextLevel: "outsideDead",
 				},
 			],
 		},
 
-		outside: {
+		outsideDead: {
 			message: [
 				"You jump out of the window and die. <br> You live on the third floor, what'd you expect?",
 			],
@@ -333,7 +333,7 @@ var options = {
 				},
 				{
 					option: "Go back",
-					nextLevel: "dogKitchen",
+					nextLevel: "bottomOfStairs",
 				},
 			],
 		},
@@ -349,9 +349,21 @@ var options = {
 				},
 				{
 					option: "Go back",
-					nextLevel: "dogKitchen",
+					nextLevel: "bottomOfStairs",
 				},
 			],
 		},
+
+        bottomOfStairs: {
+            message: [
+				"You go back to the bottom of the stairs. <br> (The cat also decided that he likes you)",
+			],
+			choices: [
+                {
+					option: "Find the dog",
+					nextLevel: "dogFind",
+				},
+			],
+        }
 	},
 };
