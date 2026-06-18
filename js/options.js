@@ -25,7 +25,7 @@ var options = {
 
 				{
 					option: "67",
-					nextLevel: "sixseven",
+					nextLevel: "sixSeven",
 				},
 			],
 		},
@@ -40,7 +40,7 @@ var options = {
 			],
 		},
 
-		sixseven: {
+		sixSeven: {
 			message: ["67"],
 			choices: [
 				{
@@ -157,7 +157,7 @@ var options = {
 			choices: [
 				{
 					option: "1",
-					nextLevel: "carCrash",
+					nextLevel: "crash",
 				},
 				{
 					option: "2",
@@ -170,7 +170,7 @@ var options = {
 			],
 		},
 
-		carCrash: {
+		crash: {
 			message: [
 				"As you're walking down the stairs, a car suddenly crashes through the wall. <br> It destroyed every bone in your body.",
 			],

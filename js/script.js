@@ -6,24 +6,25 @@ let cat = document.querySelector("#cat");
 let catCount = 0;
 
 const alarm = new Audio("assets/audio/alarm.mp3");
-alarm.volume = 0.5;
+alarm.volume = 0.4;
 const oof = new Audio("assets/audio/oof.mp3");
-const holdmenow = new Audio("assets/audio/creed.mp3");
-holdmenow.volume = 0.2;
-const sixseven = new Audio("assets/audio/67-sound.mp3");
-sixseven.volume = 0.1;
-const carCrash = new Audio("assets/audio/car-crash.mp3");
-carCrash.volume = 0.8;
+oof.volume = 0.4;
+const creed = new Audio("assets/audio/creed.mp3");
+creed.volume = 0.1;
+const sixSevenMusic = new Audio("assets/audio/67.mp3");
+sixSevenMusic.volume = 0.05;
+const crash = new Audio("assets/audio/crash.mp3");
+crash.volume = 0.4;
 const slip = new Audio("assets/audio/slip.mp3");
-slip.volume = 0.8;
-const ominousMusic = new Audio("assets/audio/ominous.mp3");
-const whisperSound = new Audio("assets/audio/whisper.mp3");
-const catMusic = new Audio("assets/audio/silly-cat.mp3");
-catMusic.volume = 0.8;
-const challengerApproaching = new Audio("assets/champ/challenger-approaching.mp3");
-challengerApproaching.volume = 0.4;
+slip.volume = 0.4;
+const ominous = new Audio("assets/audio/ominous.mp3");
+const whisper = new Audio("assets/audio/whisper.mp3");
+const catMusic = new Audio("assets/audio/cat.mp3");
+catMusic.volume = 0.7;
+const challengerApproaching = new Audio("assets/champ/challenger.mp3");
+challengerApproaching.volume = 0.2;
 const battle = new Audio("assets/champ/battle.mp3");
-battle.volume = 0.8;
+battle.volume = 0.4;
 
 setTimeout(function () {
 	renderLevel(options.levels.start, "start");
@@ -93,13 +94,13 @@ function renderLevel(level, levelName) {
 		alarm.pause();
 		alarm.currentTime = 0;
 	} else if (levelName === "creed") {
-		document.body.style.backgroundImage = "url('assets/creed-one-last-breath.gif')";
-		holdmenow.play().catch(function (error) {
+		document.body.style.backgroundImage = "url('assets/creed.gif')";
+		creed.play().catch(function (error) {
 			console.log("Audio playback waiting for user interaction:", error);
 		});
-	} else if (levelName === "sixseven") {
+	} else if (levelName === "sixSeven") {
 		document.body.style.backgroundImage = "url('assets/67.gif')";
-		sixseven.play().catch(function (error) {
+		sixSevenMusic.play().catch(function (error) {
 			console.log("Audio playback waiting for user interaction:", error);
 		});
 	} else if (levelName === "banana") {
@@ -116,9 +117,9 @@ function renderLevel(level, levelName) {
 			stopOnFocus: true,
 			className: "button",
 		}).showToast();
-	} else if (levelName === "carCrash") {
-		document.body.style.backgroundImage = "url('assets/car-crash.gif')";
-		carCrash.play().catch(function (error) {
+	} else if (levelName === "crash") {
+		document.body.style.backgroundImage = "url('assets/crash.gif')";
+		crash.play().catch(function (error) {
 			console.log("Audio playback waiting for user interaction:", error);
 		});
 		Toastify({
@@ -162,10 +163,10 @@ function renderLevel(level, levelName) {
 	} else {
 		document.body.style.backdropFilter = "none";
 		document.body.style.backgroundImage = "none";
-		holdmenow.pause();
-		holdmenow.currentTime = 0;
-		sixseven.pause();
-		sixseven.currentTime = 0;
+		creed.pause();
+		creed.currentTime = 0;
+		sixSevenMusic.pause();
+		sixSevenMusic.currentTime = 0;
 		oof.pause();
 		oof.currentTime = 0;
 	}
@@ -256,10 +257,10 @@ function triggerStopCatSequence() {
 function triggerOminousSequence() {
 	let ominousBlackCube = document.querySelector("#ominousBlackCube");
 
-	ominousMusic.play().catch(function (error) {
+	ominous.play().catch(function (error) {
 		console.log("Audio playback waiting for user interaction:", error);
 	});
-	whisperSound.play().catch(function (error) {
+	whisper.play().catch(function (error) {
 		console.log("Audio playback waiting for user interaction:", error);
 	});
 
@@ -279,10 +280,10 @@ function triggerOminousSequence() {
 			className: "button",
 		}).showToast();
 		ominousBlackCube.style.opacity = "0";
-		ominousMusic.pause();
-		ominousMusic.currentTime = 0;
-		whisperSound.pause();
-		whisperSound.currentTime = 0;
+		ominous.pause();
+		ominous.currentTime = 0;
+		whisper.pause();
+		whisper.currentTime = 0;
 		document.body.style.backdropFilter = "brightness(0.75)";
 		document.body.style.backgroundColor = "slategray";
 		container.classList.remove("fadeOut");

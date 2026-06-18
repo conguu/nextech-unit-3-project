@@ -6,16 +6,16 @@ function createAudio(src, volume = 1) {
 
 const sounds = {
 	alarm: createAudio("assets/audio/alarm.mp3", 0.5),
-	oof: createAudio("assets/audio/oof.mp3"),
-	creed: createAudio("assets/audio/creed.mp3", 0.2),
-	sixSeven: createAudio("assets/audio/sixseven.mp3", 0.1),
-	crash: createAudio("assets/audio/crash.mp3", 0.8),
-	slip: createAudio("assets/audio/slip.mp3", 0.8),
+	oof: createAudio("assets/audio/oof.mp3", 0.5),
+	creed: createAudio("assets/audio/creed.mp3", 0.1),
+	sixSeven: createAudio("assets/audio/sixseven.mp3", 0.05),
+	crash: createAudio("assets/audio/crash.mp3", 0.4),
+	slip: createAudio("assets/audio/slip.mp3", 0.4),
 	ominous: createAudio("assets/audio/ominous.mp3"),
 	whisper: createAudio("assets/audio/whisper.mp3"),
-	cat: createAudio("assets/audio/cat.mp3", 0.8),
-	challenger: createAudio("assets/champ/challenger.mp3", 0.4),
-	battle: createAudio("assets/champ/battle.mp3", 0.8),
+	cat: createAudio("assets/audio/cat.mp3", 0.7),
+	challenger: createAudio("assets/champ/challenger.mp3", 0.2),
+	battle: createAudio("assets/champ/battle.mp3", 0.4),
 };
 
 function stopAllSounds() {
