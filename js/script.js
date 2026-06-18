@@ -35,7 +35,7 @@ choicesContainer.addEventListener("click", function (event) {
 	if (event.target.tagName === "BUTTON") {
 		let clickedButton = event.target;
 		var nextLevel = clickedButton.getAttribute("data-next-level");
-		
+
 		if (nextLevel === "dogCouch") {
 			triggerOminousSequence();
 			return;

@@ -1,4 +1,5 @@
 /* Global styles */
+
 body {
 	display: flex;
 	justify-content: center;
@@ -53,7 +54,7 @@ button {
 }
 
 button:hover {
-	transform: scale(1.05);
+	transform: scale(1.025);
 	background-color: rgba(255, 255, 255, 0.203);
 }
 button:active {
@@ -67,20 +68,24 @@ button img {
 @keyframes fadeIn {
 	from {
 		opacity: 0;
+		visibility: hidden;
 	}
 
 	to {
 		opacity: 1;
+		visibility: visible;
 	}
 }
 
 @keyframes fadeOut {
 	from {
 		opacity: 1;
+		visibility: visible;
 	}
 
 	to {
 		opacity: 0;
+		visibility: hidden;
 	}
 }
 
@@ -89,6 +94,10 @@ button img {
 }
 .fadeOut {
 	animation: fadeOut 0.3s ease forwards;
+}
+
+img {
+	-webkit-user-drag: none;
 }
 
 /* Events */
@@ -118,7 +127,8 @@ button img {
 	transition-duration: 5s !important;
 }
 
-#newFoeImage, #champ {
+#newFoeImage,
+#champ {
 	left: -100%;
 }
 
@@ -137,9 +147,9 @@ button img {
 
 #champ-shadow {
 	position: absolute;
-	width: 7.5rem;
+	width: 8rem;
 	height: 1rem;
-	background-color: rgba(0, 0, 0, 0.222);
+	background-color: rgba(0, 0, 0, 0.319);
 	border-radius: 50%;
-	transform: translate(5%, -100%);
+	bottom: -1%;
 }
