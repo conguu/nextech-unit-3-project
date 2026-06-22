@@ -90,10 +90,10 @@ button img {
 }
 
 .fadeIn {
-	animation: fadeIn 0.3s ease forwards;
+	animation: fadeIn 0.2s ease forwards;
 }
 .fadeOut {
-	animation: fadeOut 0.3s ease forwards;
+	animation: fadeOut 0.2s ease forwards;
 }
 
 img {

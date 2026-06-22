@@ -1,6 +1,6 @@
 const levels = {
 	start: {
-		onEnter: { sound: "alarm" },
+		event: { sound: "alarm" },
 		message: ["Your alarm rings, waking you up."],
 		choices: [
 			{ option: "Get out of bed", nextLevel: "bedroom" },
@@ -9,28 +9,28 @@ const levels = {
 	},
 
 	dream: {
-		onEnter: { stopSounds: ["alarm"] },
+		event: { stopSounds: ["alarm"] },
 		message: ["You fall asleep, dreaming of...?"],
 		choices: [
 			{ option: "Falling off of a building", nextLevel: "creed" },
-			{ option: "67", nextLevel: "sixseven" },
+			{ option: "67", nextLevel: "sixSeven" },
 		],
 	},
 
 	creed: {
-		onEnter: { sound: "creed", background: "url('assets/creed-one-last-breath.gif')" },
+		event: { sound: "creed", background: "url('assets/creed.gif')" },
 		message: ["Hold me now"],
 		choices: [{ option: "Wake up", nextLevel: "start" }],
 	},
 
 	sixSeven: {
-		onEnter: { sound: "sixSeven", background: "url('assets/67.gif')" },
+		event: { sound: "sixSeven", background: "url('assets/sixSeven.gif')" },
 		message: ["67"],
 		choices: [{ option: "Wake up", nextLevel: "start" }],
 	},
 
 	bedroom: {
-		onEnter: { sound: "alarm" },
+		event: { sound: "alarm" },
 		message: ["You get out of bed, alarm clock still ringing."],
 		choices: [
 			{ option: "Turn off alarm clock", nextLevel: "nightStand" },
@@ -39,12 +39,13 @@ const levels = {
 	},
 
 	hallNaked: {
+		event: { death: true },
 		message: ["You leave your bedroom, forgetting to put on clothes. <br> Your dad finds you naked."],
 		choices: [{ option: "Restart", nextLevel: "start" }],
 	},
 
 	nightStand: {
-		onEnter: { stopSounds: ["alarm"] },
+		event: { stopSounds: ["alarm"] },
 		message: ["You walk over to your nightstand and turn off your alarm clock."],
 		choices: [
 			{ option: "Get your clothes on", nextLevel: "closet" },
@@ -69,7 +70,7 @@ const levels = {
 	},
 
 	outsideDead: {
-		onEnter: { toast: "Achievement: Gravity" },
+		event: { death: true, toast: "Achievement: Gravity" },
 		message: ["You jump out of the window and die. <br> You live on the third floor, what'd you expect?"],
 		choices: [{ option: "Restart", nextLevel: "start" }],
 	},
@@ -92,30 +93,42 @@ const levels = {
 		choices: [
 			{ option: "1", nextLevel: "carCrash" },
 			{ option: "2", nextLevel: "banana" },
-			{ option: "3", nextLevel: "continue" },
+			{ option: "3", nextLevel: "bottomOfStairs" },
 		],
 	},
 
 	carCrash: {
-		onEnter: {
+		event: {
+			death: true,
 			sound: "crash",
-			background: "url('assets/car-crash.gif')",
+			background: "url('assets/crash.gif')",
 			toast: "Achievement: Vehicular Manslaughter",
 		},
-		message: [
-			"As you're walking down the stairs, a car suddenly crashes through the wall. <br> It destroyed every bone in your body.",
-		],
+		message: ["As you're walking down the stairs, a car suddenly crashes through the wall. <br> It destroyed every bone in your body."],
 		choices: [{ option: "Restart", nextLevel: "start" }],
 	},
 
 	banana: {
-		onEnter: { sound: "slip", toast: "Achievement: Mario Kart" },
+		event: {
+			death: true,
+			sound: "slip",
+			toast: "Achievement: Mario Kart",
+		},
 		message: ["As you're walking down the stairs, you slip on a banana. <br> It causes you to trip and die."],
 		choices: [{ option: "Restart", nextLevel: "start" }],
 	},
 
 	bottomOfStairs: {
-		onEnter: { stopSounds: ["cat"] },
+		event: {
+			stopSounds: (state) => (state.hasCat ? [] : ["cat"]),
+			toast: (state) => {
+				if (state.hasCat && !state.achievementGiven) {
+					state.achievementGiven = true;
+					return "Achievement: New Friend";
+				}
+				return null;
+			},
+		},
 		message: ["You make it all the way down safely. <br> What should you do next?"],
 		returnMsg: ["What should you do next?"],
 		choices: [
@@ -144,12 +157,13 @@ const levels = {
 	},
 
 	dogCouch: {
+		event: { death: true },
 		message: ["You check behind the couch and find an omnious black cube. <br> It sucks you in and you die."],
 		choices: [{ option: "Restart", nextLevel: "start" }],
 	},
 
 	dogBlanket: {
-		onEnter: { toast: "Achievement: Sleepy" },
+		event: { toast: "Achievement: Dawg" },
 		message: ["You found him sleeping under the blanket!"],
 		choices: [{ option: "Play again?", nextLevel: "start" }],
 	},
@@ -174,17 +188,19 @@ const levels = {
 	},
 
 	outside: {
-		onEnter: { sound: "cat", showCat: true },
-		message: ["You walk outside and randomly spot a cat dancing."],
-		returnMsg: ["You walk outside. <br> There's nothing out there."],
+		event: {
+			sound: (state) => (!state.hasCat && !state.catLeft ? "cat" : null),
+			showCat: (state) => !state.catLeft,
+		},
+		message: (state) => (state.catLeft ? ["There's nothing out there."] : ["You walk outside and randomly spot a cat dancing."]),
 		choices: [
-			{ option: "Dance with it", nextLevel: "dance", requiresCat: true },
+			{ option: "Dance with it", nextLevel: "dance", condition: (state) => !state.catLeft },
 			{ option: "Go back", nextLevel: "bottomOfStairs" },
 		],
 	},
 
 	dance: {
-		onEnter: { sound: "cat", showCat: true },
+		event: (state) => ({ showCat: !state.catLeft }),
 		message: ["You dance with the cat."],
 		choices: [
 			{ option: "Dance more", nextLevel: "dance" },
@@ -193,7 +209,11 @@ const levels = {
 	},
 
 	stopCat: {
-		onEnter: { hideCat: true, toast: "Achievement: Master Dancer" },
+		event: (state) => {
+			state.catLeft = true;
+			state.hasCat = false;
+			return { showCat: false, stopSounds: ["cat"], toast: "Achievement: Master Dancer" };
+		},
 		message: ["The cat's had enough dancing."],
 		choices: [{ option: "Go back", nextLevel: "bottomOfStairs" }],
 	},

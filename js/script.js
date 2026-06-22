@@ -1,307 +1,128 @@
-let container = document.querySelector("#container");
-let title = document.querySelector("#title");
-let choicesContainer = document.querySelector("#choices");
-let eventContainer = document.querySelector("#eventContainer");
-let cat = document.querySelector("#cat");
-let catCount = 0;
+function resolveValue(value, state) {
+	return typeof value === "function" ? value(state) : value;
+}
 
-const alarm = new Audio("assets/audio/alarm.mp3");
-alarm.volume = 0.4;
-const oof = new Audio("assets/audio/oof.mp3");
-oof.volume = 0.4;
-const creed = new Audio("assets/audio/creed.mp3");
-creed.volume = 0.1;
-const sixSevenMusic = new Audio("assets/audio/67.mp3");
-sixSevenMusic.volume = 0.05;
-const crash = new Audio("assets/audio/crash.mp3");
-crash.volume = 0.4;
-const slip = new Audio("assets/audio/slip.mp3");
-slip.volume = 0.4;
-const ominous = new Audio("assets/audio/ominous.mp3");
-const whisper = new Audio("assets/audio/whisper.mp3");
-const catMusic = new Audio("assets/audio/cat.mp3");
-catMusic.volume = 0.7;
-const challengerApproaching = new Audio("assets/champ/challenger.mp3");
-challengerApproaching.volume = 0.2;
-const battle = new Audio("assets/champ/battle.mp3");
-battle.volume = 0.4;
+function renderChoices(level) {
+	choicesContainer.innerHTML = "";
+	if (!level.choices) return;
 
-setTimeout(function () {
-	renderLevel(options.levels.start, "start");
-	container.classList.add("fadeIn");
-}, 25);
-
-choicesContainer.addEventListener("click", function (event) {
-	if (event.target.tagName === "BUTTON") {
-		let clickedButton = event.target;
-		var nextLevel = clickedButton.getAttribute("data-next-level");
-
-		if (nextLevel === "dogCouch") {
-			triggerOminousSequence();
-			return;
-		} else if (nextLevel === "dance") {
-			catCount++;
-			if (catCount >= 5) {
-				triggerStopCatSequence();
-				return;
-			}
-		} else if (nextLevel === "bottomOfStairsCat") {
-			Toastify({
-				text: "Achievement: New Friend",
-				duration: 3000,
-				newWindow: true,
-				close: false,
-				gravity: "bottom",
-				position: "right",
-				stopOnFocus: true,
-				className: "button",
-			}).showToast();
-		} else if (nextLevel === "bottomOfStairs") {
-			cat.style.visibility = "hidden";
-			cat.style.opacity = "0";
-			catMusic.pause();
-			catMusic.currentTime = 0;
-		} else if (nextLevel === "dogFind" && catCount >= 5) {
-			container.classList.add("fadeOut");
-			renderLevel(options.levels["bottomOfStairsNoCat"], "bottomOfStairsNoCat");
-			container.classList.remove("fadeOut");
-			container.classList.add("fadeIn");
-			return;
-		} else if (nextLevel === "challenge") {
-			triggerChallengeSequence();
-			return;
-		}
-
-		container.classList.add("fadeOut");
-		renderLevel(options.levels[nextLevel], nextLevel);
-		container.classList.remove("fadeOut");
-		container.classList.add("fadeIn");
-	}
-});
+	level.choices.forEach((choice) => {
+		if (choice.condition && !choice.condition(state)) return;
+		let buttonContent = choice.image ? `<img src='${choice.image}' alt='${choice.option || ""}' />` : choice.option;
+		choicesContainer.insertAdjacentHTML("beforeend", `<button data-next-level='${choice.nextLevel}'>${buttonContent}</button>`);
+	});
+}
 
 function renderLevel(level, levelName) {
-	console.log(levelName);
-	choicesContainer.innerHTML = "";
-	if (levelName === "start" || levelName === "bedroom") {
-		alarm.play().catch(function (error) {
-			console.log("Audio playback waiting for user interaction:", error);
-		});
+	if (!level) return;
+
+	if (level === levels.start) {
+		resetState();
 	}
-	if (levelName === "nightStand") {
-		alarm.pause();
-		alarm.currentTime = 0;
-	} else if (levelName === "dream") {
-		alarm.pause();
-		alarm.currentTime = 0;
-	} else if (levelName === "creed") {
-		document.body.style.backgroundImage = "url('assets/creed.gif')";
-		creed.play().catch(function (error) {
-			console.log("Audio playback waiting for user interaction:", error);
-		});
-	} else if (levelName === "sixSeven") {
-		document.body.style.backgroundImage = "url('assets/67.gif')";
-		sixSevenMusic.play().catch(function (error) {
-			console.log("Audio playback waiting for user interaction:", error);
-		});
-	} else if (levelName === "banana") {
-		slip.play().catch(function (error) {
-			console.log("Audio playback waiting for user interaction:", error);
-		});
-		Toastify({
-			text: "Achievement: Mario Kart",
-			duration: 3000,
-			newWindow: true,
-			close: false,
-			gravity: "bottom",
-			position: "right",
-			stopOnFocus: true,
-			className: "button",
-		}).showToast();
-	} else if (levelName === "crash") {
-		document.body.style.backgroundImage = "url('assets/crash.gif')";
-		crash.play().catch(function (error) {
-			console.log("Audio playback waiting for user interaction:", error);
-		});
-		Toastify({
-			text: "Achievement: Vehicular Manslaughter",
-			duration: 3000,
-			newWindow: true,
-			close: false,
-			gravity: "bottom",
-			position: "right",
-			stopOnFocus: true,
-			className: "button",
-		}).showToast();
-	} else if (levelName === "outside" || levelName === "dance") {
-		cat.style.opacity = "1";
-		cat.style.visibility = "visible";
-		catMusic.play().catch(function (error) {
-			console.log("Audio playback waiting for user interaction:", error);
-		});
-	} else if (levelName === "dogBlanket") {
-		Toastify({
-			text: "Achievement: Sleepy",
-			duration: 3000,
-			newWindow: true,
-			close: false,
-			gravity: "bottom",
-			position: "right",
-			stopOnFocus: true,
-			className: "button",
-		}).showToast();
-	} else if (levelName === "outsideDead") {
-		Toastify({
-			text: "Achievement: Gravity",
-			duration: 3000,
-			newWindow: true,
-			close: false,
-			gravity: "bottom",
-			position: "right",
-			stopOnFocus: true,
-			className: "button",
-		}).showToast();
+
+	let currentEvent = resolveValue(level.event, state);
+
+	if (currentEvent && typeof currentEvent === "object") {
+		let soundsToStop = resolveValue(currentEvent.stopSounds, state);
+		if (soundsToStop) {
+			soundsToStop.forEach((name) => {
+				if (sounds[name]) {
+					sounds[name].pause();
+					sounds[name].currentTime = 0;
+				}
+			});
+		}
+
+		let soundToPlay = resolveValue(currentEvent.sound, state);
+		if (soundToPlay && sounds[soundToPlay]) {
+			sounds[soundToPlay].play().catch(() => {});
+		}
+
+		document.body.style.backgroundImage = currentEvent.background || "none";
+
+		let toastMsg = resolveValue(currentEvent.toast, state);
+		if (toastMsg) toast(toastMsg);
+
+		let showTheCat = resolveValue(currentEvent.showCat, state);
+		cat.style.opacity = state.hasCat || showTheCat ? "1" : "0";
+		cat.style.visibility = state.hasCat || showTheCat ? "visible" : "hidden";
+
+		if (currentEvent.death) {
+			document.body.style.backdropFilter = "brightness(0.75)";
+			sounds.oof.play().catch(() => {});
+		} else {
+			document.body.style.backdropFilter = "none";
+		}
 	} else {
-		document.body.style.backdropFilter = "none";
 		document.body.style.backgroundImage = "none";
-		creed.pause();
-		creed.currentTime = 0;
-		sixSevenMusic.pause();
-		sixSevenMusic.currentTime = 0;
-		oof.pause();
-		oof.currentTime = 0;
+		document.body.style.backdropFilter = "none";
+		cat.style.opacity = state.hasCat ? "1" : "0";
+		cat.style.visibility = state.hasCat ? "visible" : "hidden";
 	}
 
-	if (level?.choices?.some((choice) => choice.option === "Restart")) {
-		document.body.style.backdropFilter = "brightness(0.75)";
-		oof.play().catch(function (error) {
-			console.log("Audio playback waiting for user interaction:", error);
-		});
-	}
+	let baseMsg = resolveValue(level.message, state);
+	let returnMsg = resolveValue(level.returnMsg, state);
+	let messageToDisplay = state.visited.has(levelName) && returnMsg ? returnMsg : baseMsg;
+	state.visited.add(levelName);
 
-	if (!level.message || level.message.length === 0) {
-		callback();
+	if (messageToDisplay && messageToDisplay.length > 0) {
+		title.innerHTML = messageToDisplay[0];
+		if (messageToDisplay.length > 1) {
+			let i = 1;
+			(function showNextText() {
+				setTimeout(() => {
+					title.innerHTML = messageToDisplay[i];
+					i++;
+					if (i < messageToDisplay.length) showNextText();
+					else renderChoices(level);
+				}, 1500);
+			})();
+		} else {
+			renderChoices(level);
+		}
+	} else {
+		renderChoices(level);
+	}
+}
+
+choicesContainer.addEventListener("click", function (event) {
+	const clickedButton = event.target.closest("button");
+	if (!clickedButton) return;
+
+	let nextLevel = clickedButton.getAttribute("data-next-level");
+
+	if (nextLevel === "challenge") {
+		triggerChallengeSequence();
 		return;
 	}
-
-	title.innerHTML = level.message[0];
-
-	if (level.message.length > 1) {
-		let i = 1;
-
-		function time() {
-			setTimeout(function () {
-				title.innerHTML = level.message[i];
-				i++;
-
-				if (i < level.message.length) {
-					time();
-				} else {
-					callback();
-				}
-			}, 1500);
-		}
-
-		time();
-	} else {
-		callback();
+	if (nextLevel === "dogCouch") {
+		triggerOminousSequence();
+		return;
 	}
-
-	function callback() {
-		choicesContainer.innerHTML = "";
-
-		var levelChoices = level.choices;
-		if (levelChoices) {
-			for (var i = 0; i < levelChoices.length; i++) {
-				var choiceData = levelChoices[i];
-				var nextLevelAttr = choiceData.nextLevel;
-				var buttonText = choiceData.option;
-
-				if (choiceData.image) {
-					buttonContent = "<img src='" + choiceData.image + "' alt='" + buttonText + "' />";
-				} else {
-					buttonContent = buttonText;
-				}
-
-				choicesContainer.insertAdjacentHTML(
-					"beforeend",
-					"<button data-next-level='" + nextLevelAttr + "'>" + buttonContent + "</button>",
-				);
-			}
+	if (nextLevel === "dance") {
+		state.hasCat = true;
+		state.catCount++;
+		console.log(state.catCount);
+		if (state.catCount >= 5) {
+			nextLevel = "stopCat";
 		}
 	}
-}
-
-function triggerStopCatSequence() {
-	container.classList.add("fadeOut");
-	renderLevel(options.levels["stopCat"], "stopCat");
-	container.classList.remove("fadeOut");
-	container.classList.add("fadeIn");
-
-	cat.style.opacity = 0;
-	catMusic.pause();
-	catMusic.currentTime = 0;
-
-	Toastify({
-		text: "Achievement: Master Dancer",
-		duration: 3000,
-		newWindow: true,
-		close: false,
-		gravity: "bottom",
-		position: "right",
-		stopOnFocus: true,
-		className: "button",
-	}).showToast();
-	return;
-}
-
-function triggerOminousSequence() {
-	let ominousBlackCube = document.querySelector("#ominousBlackCube");
-
-	ominous.play().catch(function (error) {
-		console.log("Audio playback waiting for user interaction:", error);
-	});
-	whisper.play().catch(function (error) {
-		console.log("Audio playback waiting for user interaction:", error);
-	});
 
 	container.classList.add("fadeOut");
-	document.body.style.backgroundColor = "black";
-	ominousBlackCube.style.visibility = "visible";
-	ominousBlackCube.style.opacity = "1";
-	setTimeout(function () {
-		Toastify({
-			text: "Achievement: Cube",
-			duration: 3000,
-			newWindow: true,
-			close: false,
-			gravity: "bottom",
-			position: "right",
-			stopOnFocus: true,
-			className: "button",
-		}).showToast();
-		ominousBlackCube.style.opacity = "0";
-		ominous.pause();
-		ominous.currentTime = 0;
-		whisper.pause();
-		whisper.currentTime = 0;
-		document.body.style.backdropFilter = "brightness(0.75)";
-		document.body.style.backgroundColor = "slategray";
+	setTimeout(() => {
+		renderLevel(levels[nextLevel], nextLevel);
 		container.classList.remove("fadeOut");
 		container.classList.add("fadeIn");
-		renderLevel(options.levels["dogCouch"], "dogCouch");
-	}, 8000);
-}
+	}, 300);
+});
 
 function triggerChallengeSequence() {
 	let newFoeImg = document.querySelector("#newFoeImage");
 	let champ = document.querySelector("#champ");
 
-	challengerApproaching.play().catch(function (error) {
-		console.log("Audio playback waiting for user interaction:", error);
-	});
-
 	container.classList.add("fadeOut");
 
+	sounds.challenger.play().catch(() => {});
 	newFoeImg.style.visibility = "visible";
 	newFoeImg.style.left = "0";
 	newFoeImg.style.opacity = "1";
@@ -316,13 +137,44 @@ function triggerChallengeSequence() {
 		}, 200);
 
 		setTimeout(function () {
-			battle.play().catch(function (error) {
-				console.log("Audio playback waiting for user interaction:", error);
-			});
-
+			sounds.battle.play().catch(() => {});
 			champ.style.visibility = "visible";
 			champ.style.left = "40%";
 			champ.style.opacity = "1";
 		}, 500);
 	}, 2250);
 }
+
+function triggerOminousSequence() {
+	let ominousBlackCube = document.querySelector("#ominousBlackCube");
+
+	sounds.ominous.play().catch(function (error) {
+		console.log("Audio playback waiting for user interaction:", error);
+	});
+	sounds.whisper.play().catch(function (error) {
+		console.log("Audio playback waiting for user interaction:", error);
+	});
+
+	container.classList.add("fadeOut");
+	document.body.style.backgroundColor = "black";
+	ominousBlackCube.style.visibility = "visible";
+	ominousBlackCube.style.opacity = "1";
+	setTimeout(function () {
+		toast("Achievement: Cube");
+		ominousBlackCube.style.opacity = "0";
+		sounds.ominous.pause();
+		sounds.ominous.currentTime = 0;
+		sounds.whisper.pause();
+		sounds.whisper.currentTime = 0;
+		document.body.style.backdropFilter = "brightness(0.75)";
+		document.body.style.backgroundColor = "slategray";
+		container.classList.remove("fadeOut");
+		container.classList.add("fadeIn");
+		renderLevel(levels["dogCouch"], "dogCouch");
+	}, 8000);
+}
+
+setTimeout(() => {
+	renderLevel(levels.start, "start");
+	container.classList.add("fadeIn");
+}, 25);
