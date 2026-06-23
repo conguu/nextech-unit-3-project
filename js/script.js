@@ -50,6 +50,11 @@ function renderLevel(level, levelName) {
 		if (currentEvent.death) {
 			document.body.style.backdropFilter = "brightness(0.75)";
 			sounds.oof.play().catch(() => {});
+			if (state.hasCat) {
+				cat.style.visibility = "hidden";
+				cat.style.opacity = "0";
+				stopAllSounds();
+			}
 		} else {
 			document.body.style.backdropFilter = "none";
 		}
@@ -143,35 +148,6 @@ function triggerChallengeSequence() {
 			champ.style.opacity = "1";
 		}, 500);
 	}, 2250);
-}
-
-function triggerOminousSequence() {
-	let ominousBlackCube = document.querySelector("#ominousBlackCube");
-
-	sounds.ominous.play().catch(function (error) {
-		console.log("Audio playback waiting for user interaction:", error);
-	});
-	sounds.whisper.play().catch(function (error) {
-		console.log("Audio playback waiting for user interaction:", error);
-	});
-
-	container.classList.add("fadeOut");
-	document.body.style.backgroundColor = "black";
-	ominousBlackCube.style.visibility = "visible";
-	ominousBlackCube.style.opacity = "1";
-	setTimeout(function () {
-		toast("Achievement: Cube");
-		ominousBlackCube.style.opacity = "0";
-		sounds.ominous.pause();
-		sounds.ominous.currentTime = 0;
-		sounds.whisper.pause();
-		sounds.whisper.currentTime = 0;
-		document.body.style.backdropFilter = "brightness(0.75)";
-		document.body.style.backgroundColor = "slategray";
-		container.classList.remove("fadeOut");
-		container.classList.add("fadeIn");
-		renderLevel(levels["dogCouch"], "dogCouch");
-	}, 8000);
 }
 
 setTimeout(() => {

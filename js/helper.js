@@ -11,17 +11,17 @@ function createAudio(src, volume = 1) {
 }
 
 const sounds = {
-	alarm: createAudio("assets/audio/alarm.mp3", 0.5),
-	oof: createAudio("assets/audio/oof.mp3", 0.5),
+	alarm: createAudio("assets/audio/alarm.mp3", 0.4),
+	oof: createAudio("assets/audio/oof.mp3", 0.4),
 	creed: createAudio("assets/audio/creed.mp3", 0.1),
-	sixSeven: createAudio("assets/audio/sixSeven.mp3", 0.05),
+	sixSeven: createAudio("assets/audio/sixSeven.mp3", 0.1),
+	challenger: createAudio("assets/champ/challenger.mp3", 0.4),
+	battle: createAudio("assets/champ/battle.mp3", 0.4),
 	crash: createAudio("assets/audio/crash.mp3", 0.4),
 	slip: createAudio("assets/audio/slip.mp3", 0.4),
+	cat: createAudio("assets/audio/cat.mp3", 0.5),
 	ominous: createAudio("assets/audio/ominous.mp3"),
 	whisper: createAudio("assets/audio/whisper.mp3"),
-	cat: createAudio("assets/audio/cat.mp3", 0.7),
-	challenger: createAudio("assets/champ/challenger.mp3", 0.2),
-	battle: createAudio("assets/champ/battle.mp3", 0.4),
 };
 
 function stopAllSounds() {
@@ -56,6 +56,12 @@ function toast(text) {
 		gravity: "bottom",
 		position: "right",
 		stopOnFocus: true,
-		className: "button",
+		style: {
+			background: "white",
+			color: "black",
+			fontWeight: "bold",
+			padding: "10px",
+			borderRadius: "8px",
+		},
 	}).showToast();
 }

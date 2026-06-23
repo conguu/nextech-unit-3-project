@@ -124,6 +124,7 @@ const levels = {
 			toast: (state) => {
 				if (state.hasCat && !state.achievementGiven) {
 					state.achievementGiven = true;
+					toast("The cat decided that he likes you.");
 					return "Achievement: New Friend";
 				}
 				return null;
@@ -158,7 +159,7 @@ const levels = {
 
 	dogCouch: {
 		event: { death: true },
-		message: ["You check behind the couch and find an omnious black cube. <br> It sucks you in and you die."],
+		message: ["You check behind the couch and find an ominous black cube. <br> It sucks you in and you die."],
 		choices: [{ option: "Restart", nextLevel: "start" }],
 	},
 
@@ -192,7 +193,7 @@ const levels = {
 			sound: (state) => (!state.hasCat && !state.catLeft ? "cat" : null),
 			showCat: (state) => !state.catLeft,
 		},
-		message: (state) => (state.catLeft ? ["There's nothing out there."] : ["You walk outside and randomly spot a cat dancing."]),
+		message: (state) => (state.catLeft || state.hasCat ? ["There's nothing out there."] : ["You walk outside and randomly spot a cat dancing."]),
 		choices: [
 			{ option: "Dance with it", nextLevel: "dance", condition: (state) => !state.catLeft },
 			{ option: "Go back", nextLevel: "bottomOfStairs" },
