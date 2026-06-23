@@ -1,7 +1,6 @@
 let container = document.querySelector("#container");
 let title = document.querySelector("#title");
 let choicesContainer = document.querySelector("#choices");
-let eventContainer = document.querySelector("#eventContainer");
 let cat = document.querySelector("#cat");
 
 function createAudio(src, volume = 1) {

@@ -39,7 +39,10 @@ const levels = {
 	},
 
 	hallNaked: {
-		event: { death: true },
+		event: {
+			death: true,
+			toast: "Achievement: Public Indecency",
+		},
 		message: ["You leave your bedroom, forgetting to put on clothes. <br> Your dad finds you naked."],
 		choices: [{ option: "Restart", nextLevel: "start" }],
 	},
@@ -71,7 +74,7 @@ const levels = {
 
 	outsideDead: {
 		event: { death: true, toast: "Achievement: Gravity" },
-		message: ["You jump out of the window and die. <br> You live on the third floor, what'd you expect?"],
+		message: ["You jump out of the window and die. <br> Your bedroom's on the third floor, what'd you expect?"],
 		choices: [{ option: "Restart", nextLevel: "start" }],
 	},
 
@@ -195,7 +198,7 @@ const levels = {
 		},
 		message: (state) => (state.catLeft || state.hasCat ? ["There's nothing out there."] : ["You walk outside and randomly spot a cat dancing."]),
 		choices: [
-			{ option: "Dance with it", nextLevel: "dance", condition: (state) => !state.catLeft },
+			{ option: "Dance with it", nextLevel: "dance", condition: (state) => !state.catLeft && !state.hasCat },
 			{ option: "Go back", nextLevel: "bottomOfStairs" },
 		],
 	},
