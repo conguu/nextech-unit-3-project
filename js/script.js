@@ -121,33 +121,37 @@ choicesContainer.addEventListener("click", function (event) {
 	}, 300);
 });
 
-function triggerChallengeSequence() {
-	let newFoeImg = document.querySelector("#newFoeImage");
-	let champ = document.querySelector("#champ");
-
+function triggerOminousSequence() {
+	if (state.hasCat) {
+		cat.style.visibility = "hidden";
+		cat.style.opacity = "0";
+		stopAllSounds();
+	}
 	container.classList.add("fadeOut");
 
-	sounds.challenger.play().catch(() => {});
-	newFoeImg.style.visibility = "visible";
-	newFoeImg.style.left = "0";
-	newFoeImg.style.opacity = "1";
+	let ominousBlackCube = document.querySelector("#ominousBlackCube");
+	sounds.ominous.play().catch(() => {});
+	sounds.whisper.play().catch(() => {});
+	document.body.style.backgroundColor = "black";
+	ominousBlackCube.style.visibility = "visible";
+	ominousBlackCube.style.opacity = "1";
 
 	setTimeout(function () {
-		newFoeImg.style.left = "100%";
-		newFoeImg.style.opacity = "0";
-		newFoeImg.style.visibility = "hidden";
-
-		setTimeout(function () {
-			newFoeImg.style.left = "-50%";
-		}, 200);
-
-		setTimeout(function () {
-			sounds.battle.play().catch(() => {});
-			champ.style.visibility = "visible";
-			champ.style.left = "40%";
-			champ.style.opacity = "1";
-		}, 500);
-	}, 2250);
+		toast("Achievement: Cube");
+		ominousBlackCube.style.opacity = "0";
+		sounds.ominous.pause();
+		sounds.ominous.currentTime = 0;
+		sounds.whisper.pause();
+		sounds.whisper.currentTime = 0;
+		if (state.hasCat) {
+			sounds.cat.play().catch(() => {});
+		}
+		document.body.style.backdropFilter = "brightness(0.75)";
+		document.body.style.backgroundColor = "slategray";
+		container.classList.remove("fadeOut");
+		container.classList.add("fadeIn");
+		renderLevel(levels["dogCouch"], "dogCouch");
+	}, 8000);
 }
 
 setTimeout(() => {

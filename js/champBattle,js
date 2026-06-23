@@ -1,26 +1,60 @@
-function triggerOminousSequence() {
-	if (state.hasCat) {cat.style.visibility = "hidden"; cat.style.opacity = "0"; stopAllSounds()};
+function triggerChallengeSequence() {
+	let newFoeImg = document.querySelector("#newFoeImage");
+	let champ = document.querySelector("#champ");
+
 	container.classList.add("fadeOut");
 
-	let ominousBlackCube = document.querySelector("#ominousBlackCube");
-	sounds.ominous.play().catch(() => {});
-	sounds.whisper.play().catch(() => {});
-	document.body.style.backgroundColor = "black";
-	ominousBlackCube.style.visibility = "visible";
-	ominousBlackCube.style.opacity = "1";
+	sounds.challenger.play().catch(() => {});
+	newFoeImg.style.visibility = "visible";
+	newFoeImg.style.left = "0";
+	newFoeImg.style.opacity = "1";
 
 	setTimeout(function () {
-		toast("Achievement: Cube");
-		ominousBlackCube.style.opacity = "0";
-		sounds.ominous.pause();
-		sounds.ominous.currentTime = 0;
-		sounds.whisper.pause();
-		sounds.whisper.currentTime = 0;
-		if (state.hasCat) {sounds.cat.play().catch(() => {})};
-		document.body.style.backdropFilter = "brightness(0.75)";
-		document.body.style.backgroundColor = "slategray";
-		container.classList.remove("fadeOut");
-		container.classList.add("fadeIn");
-		renderLevel(levels["dogCouch"], "dogCouch");
-	}, 8000);
+		newFoeImg.style.left = "100%";
+		newFoeImg.style.opacity = "0";
+		newFoeImg.style.visibility = "hidden";
+
+		setTimeout(function () {
+			newFoeImg.style.left = "-50%";
+		}, 200);
+
+		setTimeout(function () {
+			sounds.battle.play().catch(() => {});
+			champ.style.visibility = "visible";
+			champ.style.left = "40%";
+			champ.style.opacity = "1";
+			champBattle();
+		}, 500);
+	}, 2250);
+}
+
+function champBattle() {
+	let playerHP = 100;
+	let champHP = 100;
+
+	let playerOptions = {
+		fight: [
+			{
+				name: "Punch",
+				damage: 10,
+				cooldown: 0,
+			},
+			{
+				name: "Kick",
+				damage: 15,
+				cooldown: 1,
+			},
+			{
+				name: "Kick",
+				damage: 10,
+				cooldown: 1,
+			},
+		],
+		item: {
+
+		},
+		run: {
+
+		},
+	}
 }
