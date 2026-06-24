@@ -18,6 +18,30 @@
 			<img id="ominousBlackCube" class="event" src="assets/ominousBlackCube.gif" />
 			<img id="cat" class="event" src="assets/cat.gif" />
 			<img id="newFoeImage" class="event" src="assets/champ/champ_newfoe.png" />
+			<div id="battleUI">
+				<div id="champStats">
+					<img class="champStatBG" src="assets/champ/champStats.svg" />
+					<div class="champStatTxt">
+						<h1>Champ</h1>
+						<div class="hp-bar-container">
+							<div id="champHpBar" class="hp-bar-fill" style="width: 100%"></div>
+						</div>
+						<div id="champHP">- / -</div>
+					</div>
+				</div>
+				<div id="playerUI">
+					<img class="playerBG" src="assets/champ/playerUI.svg" />
+					<div class="playerStatTxt">
+						<h1>You</h1>
+						<div class="hp-bar-container">
+							<div id="playerHpBar" class="hp-bar-fill" style="width: 100%"></div>
+						</div>
+						<div id="playerHP">- / -</div>
+					</div>
+					<div id="battleMessage"><h2>Lorum ipsum...</h2></div>
+					<div id="battleOptions"></div>
+				</div>
+			</div>
 		</div>
 
 		<div id="champ" class="event">
@@ -27,8 +51,8 @@
 
 		<script src="js/helper.js"></script>
 		<script src="js/levels.js"></script>
-		<script src="js/script.js"></script>
 		<script src="js/champBattle.js"></script>
+		<script src="js/script.js"></script>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 	</body>
 </html>

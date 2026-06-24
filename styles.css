@@ -129,27 +129,124 @@ img {
 
 #newFoeImage,
 #champ {
-	left: -100%;
+    left: -100%;
 }
 
 #newFoeImage {
-	width: 100vw;
+    width: 100%;
 }
 
 #champ {
-	width: 7.5rem;
+	width: 11vw;
+	top: 15%;
 }
 
 #champ-img {
 	position: relative;
+	width: 10vw;
 	z-index: 20;
 }
 
 #champ-shadow {
 	position: absolute;
-	width: 8rem;
+	width: 10.5vw;
 	height: 1rem;
 	background-color: rgba(0, 0, 0, 0.319);
 	border-radius: 50%;
+	transform: translateX(-7.5px);
 	bottom: -1%;
+}
+
+/* Battle UI */
+#battleUI {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 15;
+    pointer-events: none;
+}
+
+#champStats {
+    position: absolute;
+    top: 10px;
+    left: 15%;
+    width: 22vw;
+    height: auto;
+}
+
+#playerUI {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+	transform: translateX(-50%);
+    width: 1150px;
+    height: auto;
+}
+
+.champStatBG, .playerBG {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.hp-bar-container {
+    width: 265px;
+    height: 13px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 4px 0;
+}
+
+.hp-bar-fill {
+    height: 100%;
+    background: #00ff6a;
+    border-radius: 6px;
+    transition: width 0.3s ease;
+}
+
+.champStatTxt {
+    position: absolute;
+    top: -14%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+	text-align: left;
+    color: black;
+    font-weight: bold;
+	padding: 20px;
+}
+
+.playerStatTxt {
+    position: absolute;
+    top: -6%;
+	left: 71.5%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+	text-align: left;
+    color: black;
+    font-weight: bold;
+	padding: 20px;
+}
+
+#battleMessage {
+	position: absolute;
+	top: 45%;
+	left: 0%;
+	width: 100%;
+	height: 50%;
+	display: flex;
+    flex-direction: column;
+	text-align: left;
+    color: black;
+    font-weight: bold;
+	padding: 20px;
 }
