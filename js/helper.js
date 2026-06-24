@@ -40,7 +40,6 @@ const state = {
 
 function resetState() {
 	state.catCount = 0;
-	state.hasCat = false;
 	state.catLeft = false;
 	state.achievementGiven = false;
 	state.visited.clear();

@@ -36,7 +36,7 @@ function champBattle() {
 		fight: [
 			{
 				name: "Punch",
-				damage: 10,
+				damage: 5,
 				cooldown: 0,
 			},
 			{
@@ -45,13 +45,13 @@ function champBattle() {
 				cooldown: 1,
 			},
 			{
-				name: "Kick",
-				damage: 10,
-				cooldown: 1,
+				name: "Fireball",
+				damage: 30,
+				cooldown: 2,
 			},
 		],
 		item: {
-
+			
 		},
 		run: {
 
