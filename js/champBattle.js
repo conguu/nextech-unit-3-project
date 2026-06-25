@@ -38,13 +38,16 @@ function triggerChallengeSequence() {
 function champBattle() {
 	let playerHP = 100;
 	let champHP = 100;
+	let typeTimeout = null;
+	let defaultMessage = "A wild CHAMP appeared!";
+
 	let playerAbilities = [
 		{ name: "Punch", damage: 5, cooldown: 0 },
 		{ name: "Kick", damage: 15, cooldown: 1 },
 		{ name: "Shoe Throw", damage: 25, cooldown: 2 },
 	];
 	let playerItems = state.hasCat ? [{ name: "Cat", damage: 50, uses: 1 }] : [];
-	let playerRun = false;
+	let cooldowns = { Punch: 0, Kick: 0, "Shoe Throw": 0 };
 	let champAbilities = [
 		{ name: "Punch", damage: 5, cooldown: 0 },
 		{ name: "Pose", damage: 10, cooldown: 1 },
@@ -71,7 +74,7 @@ function champBattle() {
 
 	updateHPBars();
 	menuReset();
-	typeMessage("A wild CHAMP appeared!");
+	typeMessage(defaultMessage);
 
 	function menuReset() {
 		options.classList.remove("compact");
@@ -84,17 +87,19 @@ function champBattle() {
 
 	function typeMessage(text, callback) {
 		msg.innerHTML = "";
+		if (typeTimeout) clearTimeout(typeTimeout);
 		let i = 0;
 		function type() {
 			if (i < text.length) {
 				msg.innerHTML += text[i];
 				i++;
-				setTimeout(type, 50);
-			} else if (callback) {
-				callback();
+				typeTimeout = setTimeout(type, 50);
+			} else {
+				typeTimeout = null;
+				if (callback) callback();
 			}
 		}
-		type();
+		type()
 	}
 
 	function hideElement(element) {
@@ -111,9 +116,25 @@ function champBattle() {
 			options.innerHTML = "";
 			options.classList.add("compact");
 			playerAbilities.forEach(function (ability) {
-				options.insertAdjacentHTML("beforeend", `<button>${ability.name.toUpperCase()}</button>`);
+				let cd = cooldowns[ability.name];
+				if (cd > 0) {
+					options.insertAdjacentHTML("beforeend", `<button style="pointer-events:none;opacity:0.4">${ability.name.toUpperCase()}</button>`);
+				} else {
+					options.insertAdjacentHTML("beforeend", `<button>${ability.name.toUpperCase()}</button>`);
+				}
 			});
+
 			options.insertAdjacentHTML("beforeend", `<button>BACK</button>`);
+
+			options.querySelectorAll("button:not(:last-child)").forEach((btn, i) => {
+				btn.addEventListener("mouseenter", () => {
+					typeMessage(playerAbilities[i].name + ": -" + playerAbilities[i].damage + " HP, " + playerAbilities[i].cooldown + " turn cooldown.");
+				});
+				btn.addEventListener("mouseleave", () => {
+					if (typeTimeout) clearTimeout(typeTimeout);
+					msg.innerHTML = defaultMessage;
+				});
+			});
 		} else if (btn.textContent === "ITEMS") {
 			options.innerHTML = "";
 			if (playerItems.length === 0) {
@@ -139,7 +160,43 @@ function champBattle() {
 				}, 250);
 			}, 2500);
 		} else {
-			menuReset();
+			let ability = playerAbilities.find(a => a.name.toUpperCase() === btn.textContent);
+			if (ability) {
+				champHP = Math.max(0, champHP - ability.damage);
+				cooldowns[ability.name] = ability.cooldown;
+				for (let a of playerAbilities) {
+					if (cooldowns[a.name] > 0) cooldowns[a.name]--;
+				}
+				updateHPBars();
+
+				typeMessage(`You used ${ability.name}!`, function () {
+					setTimeout(() => {
+						let randChance = Math.floor(Math.random() * 10) + 1;
+
+						if (ability.name === "Punch") {
+							if (randChance <= 5) {
+								typeMessage("It's not very effective...");
+							} else {
+								typeMessage("It's almost completely ineffective...");
+							}
+						} else if (ability.name === "Shoe Throw") {
+							if (randChance <= 3) {
+								typeMessage("It's super effective!");
+							} else if (randChance <= 7) {
+								typeMessage("It's incredibly effective!");
+							} else {
+								typeMessage("効果はバツグン！");
+							}
+						}
+
+						setTimeout(() => {
+							menuReset();
+						}, 2000);
+					}, 1000);
+				});
+			} else {
+				menuReset();
+			}
 		}
 	});
 }
