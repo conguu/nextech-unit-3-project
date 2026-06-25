@@ -96,8 +96,9 @@ choicesContainer.addEventListener("click", function (event) {
 
 	let nextLevel = clickedButton.getAttribute("data-next-level");
 
-	if (nextLevel === "challenge") {
+	if (nextLevel === "hi") {
 		triggerChallengeSequence();
+		state.visited.add("hi");
 		return;
 	}
 	if (nextLevel === "dogCouch") {

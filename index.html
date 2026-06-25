@@ -18,27 +18,31 @@
 			<img id="ominousBlackCube" class="event" src="assets/ominousBlackCube.gif" />
 			<img id="cat" class="event" src="assets/cat.gif" />
 			<img id="newFoeImage" class="event" src="assets/champ/champ_newfoe.png" />
-			<div id="battleUI">
-				<div id="champStats">
-					<img class="champStatBG" src="assets/champ/champStats.svg" />
-					<div class="champStatTxt">
-						<h1>Champ</h1>
-						<div class="hp-bar-container">
-							<div id="champHpBar" class="hp-bar-fill" style="width: 100%"></div>
-						</div>
-						<div id="champHP">- / -</div>
+		</div>
+
+		<div id="battleUI">
+			<div id="champStats">
+				<img class="champStatBG" src="assets/champ/champStats.svg" />
+				<div class="champStatTxt">
+					<h2>CHAMP</h2>
+					<div class="hp-bar-container">
+						<div id="champHpBar" class="hp-bar-fill" style="width: 100%"></div>
 					</div>
+					<h3 id="champHP"></h3>
 				</div>
-				<div id="playerUI">
-					<img class="playerBG" src="assets/champ/playerUI.svg" />
-					<div class="playerStatTxt">
-						<h1>You</h1>
-						<div class="hp-bar-container">
-							<div id="playerHpBar" class="hp-bar-fill" style="width: 100%"></div>
-						</div>
-						<div id="playerHP">- / -</div>
+			</div>
+			<div id="playerUI">
+				<img class="playerBG" src="assets/champ/playerUI.svg" />
+				<div class="playerStatTxt">
+					<h2>YOU</h2>
+					<div class="hp-bar-container">
+						<div id="playerHpBar" class="hp-bar-fill" style="width: 100%"></div>
 					</div>
-					<div id="battleMessage"><h2>Lorum ipsum...</h2></div>
+					<h3 id="playerHP"></h3>
+				</div>
+
+				<div class="playerUIbottom">
+					<div class="battleMsgContainer"><h2 id="battleMessage"></h2></div>
 					<div id="battleOptions"></div>
 				</div>
 			</div>

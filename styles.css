@@ -1,4 +1,8 @@
-
+@font-face {
+	font-family: 'Pokemon';
+	src: url('assets/champ/pokemon.ttf') format('truetype');
+	font-display: swap;
+}
 
 body {
 	display: flex;
@@ -57,9 +61,11 @@ button:hover {
 	transform: scale(1.025);
 	background-color: rgba(255, 255, 255, 0.203);
 }
+
 button:active {
 	transform: scale(0.95);
 }
+
 button img {
 	width: 100px;
 	pointer-events: none;
@@ -92,6 +98,7 @@ button img {
 .fadeIn {
 	animation: fadeIn 0.2s ease forwards;
 }
+
 .fadeOut {
 	animation: fadeOut 0.2s ease forwards;
 }
@@ -129,11 +136,11 @@ img {
 
 #newFoeImage,
 #champ {
-    left: -100%;
+	left: -100%;
 }
 
 #newFoeImage {
-    width: 100%;
+	width: 100%;
 }
 
 #champ {
@@ -158,95 +165,140 @@ img {
 }
 
 /* Battle UI */
+h2 {
+	margin-top: 0;
+}
+
 #battleUI {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
-    z-index: 15;
-    pointer-events: none;
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.2s ease;
+	z-index: 15;
 }
 
 #champStats {
-    position: absolute;
-    top: 10px;
-    left: 15%;
-    width: 22vw;
-    height: auto;
+	position: absolute;
+	top: 10px;
+	left: 12.5%;
+	width: 22vw;
+	height: auto;
 }
 
 #playerUI {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
+	position: absolute;
+	bottom: 0;
+	left: 50%;
 	transform: translateX(-50%);
-    width: 1150px;
-    height: auto;
+	width: 1150px;
+	height: auto;
 }
 
-.champStatBG, .playerBG {
-    width: 100%;
-    height: 100%;
-    display: block;
+.champStatBG,
+.playerBG {
+	width: 100%;
+	height: 100%;
+	display: block;
 }
 
-.hp-bar-container {
-    width: 265px;
-    height: 13px;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 6px;
-    overflow: hidden;
-    margin: 4px 0;
-}
-
-.hp-bar-fill {
-    height: 100%;
-    background: #00ff6a;
-    border-radius: 6px;
-    transition: width 0.3s ease;
+.champStatTxt,
+.playerStatTxt {
+	position: absolute;
+	width: 100%;
+	height: 6.75rem;
+	text-align: left;
+	color: black;
+	font-weight: bold;
+	padding: 20px;
 }
 
 .champStatTxt {
-    position: absolute;
-    top: -14%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-	text-align: left;
-    color: black;
-    font-weight: bold;
-	padding: 20px;
+	top: -3%;
+	left: 0;
 }
 
 .playerStatTxt {
-    position: absolute;
-    top: -6%;
+	top: -1.25%;
 	left: 71.5%;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-	text-align: left;
-    color: black;
-    font-weight: bold;
-	padding: 20px;
 }
 
-#battleMessage {
+.hp-bar-container {
+	width: 265px;
+	height: 13px;
+	background: rgba(0, 0, 0, 0.4);
+	overflow: hidden;
+	margin: 4px 0;
+}
+
+.hp-bar-fill {
+	height: 100%;
+	background: #00ff6a;
+	transition: width 0.3s ease;
+}
+
+#champHP,
+#playerHP {
+	margin: 0;
+}
+
+.playerUIbottom {
 	position: absolute;
-	top: 45%;
+	top: 43.5%;
 	left: 0%;
 	width: 100%;
-	height: 50%;
+	height: 56%;
+	box-sizing: border-box;
 	display: flex;
-    flex-direction: column;
+	flex-direction: row;
+	padding: 10px;
+}
+
+.battleMsgContainer {
+	display: flex;
+	flex-direction: column;
 	text-align: left;
-    color: black;
-    font-weight: bold;
-	padding: 20px;
+	padding: 12px;
+	color: black;
+	font-weight: bold;
+}
+
+#battleOptions {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-left: auto;
+	width: 314px;
+}
+
+#battleOptions button {
+	position: relative;
+	border-radius: 0;
+	text-shadow: none;
+	box-shadow: none;
+	font-weight: bold;
+	font-family: 'Pokemon';
+	font-size: 1.5em;
+	height: 1.5em;
+	color: black;
+	border: none;
+	height: auto;
+	margin-bottom: -3px;
+	pointer-events: auto;
+}
+
+#battleOptions button:hover {
+	background: transparent;
+	transform: scale(1.05) !important;
+}
+
+#battleOptions button:active {
+	background: transparent;
+	transform: scale(0.95) !important;
+}
+
+#battleOptions.compact button {
+	font-size:1.2em;
 }

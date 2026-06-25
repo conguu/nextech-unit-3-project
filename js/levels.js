@@ -33,8 +33,8 @@ const levels = {
 		event: { sound: "alarm" },
 		message: ["You get out of bed, alarm clock still ringing."],
 		choices: [
-			{ option: "Turn off alarm clock", nextLevel: "nightStand" },
 			{ option: "Leave your bedroom", nextLevel: "hallNaked" },
+			{ option: "Turn off alarm clock", nextLevel: "nightStand" },
 		],
 	},
 
@@ -67,8 +67,8 @@ const levels = {
 	clothed: {
 		message: ["You should probably leave your bedroom now."],
 		choices: [
-			{ option: "Walk out the door", nextLevel: "hall" },
 			{ option: "Jump out of the window", nextLevel: "outsideDead" },
+			{ option: "Walk out the door", nextLevel: "hall" },
 		],
 	},
 
@@ -82,12 +82,13 @@ const levels = {
 		message: ["You walk out the door to find a stranger standing outside."],
 		choices: [
 			{ option: "Say hi", nextLevel: "hi" },
-			{ option: "Challenge him", nextLevel: "challenge" },
+			{ option: "Challenge him", nextLevel: "hi" },
 		],
 	},
 
 	hi: {
 		message: ["You say hi. <br> He was just going to the bathroom."],
+		returnMsg: ["You safely escaped the battle with Champ."],
 		choices: [{ option: "Walk downstairs", nextLevel: "stairs" }],
 	},
 
