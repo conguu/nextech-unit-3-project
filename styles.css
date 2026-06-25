@@ -299,6 +299,31 @@ h2 {
 	transform: scale(0.95) !important;
 }
 
-#battleOptions.compact button {
-	font-size:1.2em;
+.menu-row {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.cursor {
+	color: black;
+	font-size: 2em;
+	visibility: hidden;
+	user-select: none;
+	width: fit-content;
+	margin: 0;
+	padding: 0;
+}
+
+.menu-item {
+	font-family: 'Pokemon';
+	font-size: 1.5em;
+	color: black;
+	cursor: pointer;
+	user-select: none;
+}
+
+.menu-item.disabled {
+	opacity: 0.4;
+	pointer-events: none;
 }
